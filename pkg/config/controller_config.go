@@ -9,7 +9,6 @@ import (
 const (
 	flagLogLevel                     = "log-level"
 	flagMaxConcurrentReconciles      = "max-concurrent-reconciles"
-	flagEnableConfigMapCheck         = "enable-configmap-check"
 	flagEndpointChunkSize            = "endpoint-chunk-size"
 	defaultLogLevel                  = "info"
 	defaultMaxConcurrentReconciles   = 3
@@ -25,8 +24,6 @@ type ControllerConfig struct {
 	LogLevel string
 	// EndpointChunkSize specifies the number of endpoints to include in a single chunk
 	EndpointChunkSize int
-	// EnableConfigMapCheck enables checking the configmap for starting the NP controller
-	EnableConfigMapCheck bool
 	// MaxConcurrentReconciles specifies the max number of reconcile loops
 	MaxConcurrentReconciles int
 	// PodUpdateBatchPeriodDuration specifies the duration between batch updates of pods
@@ -42,8 +39,6 @@ func (cfg *ControllerConfig) BindFlags(fs *pflag.FlagSet) {
 		"Maximum number of concurrent reconcile loops")
 	fs.IntVar(&cfg.EndpointChunkSize, flagEndpointChunkSize, defaultEndpointsChunkSize, ""+
 		"Number of endpoints to include in a single policy endpoints resource")
-	fs.BoolVar(&cfg.EnableConfigMapCheck, flagEnableConfigMapCheck, defaultEnableConfigMapCheck,
-		"Enable checking the configmap for starting the network policy controller")
 	fs.DurationVar(&cfg.PodUpdateBatchPeriodDuration, flagPodUpdateBatchPeriodDuration, defaultBatchPeriodDuration, ""+
 		"Duration between batch updates of pods")
 	cfg.RuntimeConfig.BindFlags(fs)
